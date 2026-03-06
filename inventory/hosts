@@ -1,5 +1,2 @@
 [web]
-3.78.187.232 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ansible-key.pem ansible_become=yes
-
-[docker]
-3.78.187.232 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ansible-key.pem ansible_become=yes
+89.245.181.154 ansible_user=ubuntu ansible_ssh_private_key_file=~/home/alex/.ssh/ansible-key.pem ansible_become=yes
