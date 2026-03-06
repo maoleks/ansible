@@ -1,14 +1,14 @@
-# Создаём Security Group для SSH и HTTP
+# Security Group
 resource "aws_security_group" "web_sg" {
   name        = "allow-my-ip"
-  description = "Allow SSH and HTTP from my IP"
+  description = "Allow SSH from my IP and HTTP from anywhere"
 
   ingress {
     description = "SSH from my IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["<YOUR_PUBLIC_IP>/32"]  # <-- замени на свой IP
+    cidr_blocks = ["89.245.181.154/32"] # <-- замени на свой публичный IP
   }
 
   ingress {
@@ -29,9 +29,9 @@ resource "aws_security_group" "web_sg" {
 
 # EC2 Ubuntu
 resource "aws_instance" "web" {
-  ami                    = "ami-0c02fb55956c7d316" # Ubuntu 22.04 eu-central-1
+  ami                    = "ami-0c02fb55956c7d316" # Ubuntu 22.04 LTS в eu-central-1
   instance_type           = "t2.micro"
-  key_name                = "<YOUR_KEY_PAIR>"      # ключ который есть в AWS
+  key_name                = "ansible-key"       # имя ключа SSH, который есть в AWS
   security_groups         = [aws_security_group.web_sg.name]
 
   tags = {
@@ -39,6 +39,7 @@ resource "aws_instance" "web" {
   }
 }
 
+# Вывод Public IP
 output "ec2_public_ip" {
   value = aws_instance.web.public_ip
 }
