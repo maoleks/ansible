@@ -1,41 +1,62 @@
-- name: Create index.html with rainbow and North Carolina
-  copy:
-    dest: /var/www/html/index.html
-    content: |
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <title>Hello World</title>
-        <style>
-          body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-          h1 {
-            font-size: 60px;
-            text-shadow: 2px 2px 4px black;
-          }
-          img {
-            max-width: 80%;
-            height: auto;
-            border: 5px solid white;
-            margin-top: 20px;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>HELLO NORTH CAROLINA!</h1>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/North_Carolina_in_United_States.svg/800px-North_Carolina_in_United_States.svg.png" alt="North Carolina">
-      </body>
-      </html>
-    owner: www-data
-    group: www-data
-    mode: '0644'
+---
+- name: Install Nginx and create something
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Create index.html 
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <title>Hello World</title>
+            <style>
+              body {
+                text-align: center;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+                color: white;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+              }
+              h1 {
+                font-size: 60px;
+                text-shadow: 2px 2px 4px black;
+              }
+              img {
+                max-width: 80%;
+                height: auto;
+                border: 5px solid white;
+                margin-top: 20px;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>HELLO NORTH CAROLINA!</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/North_Carolina_in_United_States.svg/800px-North_Carolina_in_United_States.svg.png" alt="North Carolina">
+          </body>
+          </html>
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Ensure Nginx is running
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
