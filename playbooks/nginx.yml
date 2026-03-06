@@ -13,11 +13,11 @@
         name: nginx
         state: present
 
-- name: Download NC image from Google Drive
-  get_url:
-    url: https://drive.google.com/uc?export=download&id=1TUqmpBtqPBnvKySgft8M-BDKA-t0yIdU
-    dest: /var/www/html/nc.png
-    mode: '0644'
+    - name: Download NC image from Google Drive
+      get_url:
+        url: https://drive.google.com/uc?export=download&id=1TUqmpBtqPBnvKySgft8M-BDKA-t0yIdU
+        dest: /var/www/html/nc.png
+        mode: '0644'
 
     - name: Create index.html with rainbow and North Carolina
       copy:
