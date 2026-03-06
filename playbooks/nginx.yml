@@ -1,5 +1,5 @@
 ---
-- name: Install Nginx and deploy rainbow page with image
+- name: Install Nginx and deploy rainbow page with local image
   hosts: web
   become: yes
 
@@ -13,10 +13,12 @@
         name: nginx
         state: present
 
-    - name: Download NC image from Google Drive
-      get_url:
-        url: https://drive.google.com/uc?export=download&id=1TUqmpBtqPBnvKySgft8M-BDKA-t0yIdU
+    - name: Copy NC image from repo to server
+      copy:
+        src: ../files/nc.png   # путь от playbook до файла
         dest: /var/www/html/nc.png
+        owner: www-data
+        group: www-data
         mode: '0644'
 
     - name: Create index.html with rainbow and North Carolina
