@@ -1,0 +1,5 @@
+[web]
+EC2_IP ansible_user=ubuntu
+
+[docker]
+EC2_IP ansible_user=ubuntu
