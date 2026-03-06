@@ -29,7 +29,7 @@ resource "aws_security_group" "web_sg" {
 
 # EC2 Ubuntu
 resource "aws_instance" "web" {
-  ami                    = "ami-0c02fb55956c7d316" # Ubuntu 22.04 LTS в eu-central-1
+  ami                    = "ami-027066fb16fc18634" # Ubuntu 22.04 LTS в eu-central-1
   instance_type           = "t2.micro"
   key_name                = "ansible-key"       # имя ключа SSH, который есть в AWS
   security_groups         = [aws_security_group.web_sg.name]
