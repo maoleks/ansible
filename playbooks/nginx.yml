@@ -1,5 +1,5 @@
 ---
-- name: Install Nginx and create something
+- name: Install Nginx and deploy rainbow page with image
   hosts: web
   become: yes
 
@@ -13,7 +13,15 @@
         name: nginx
         state: present
 
-    - name: Create index.html 
+    - name: Copy local image to server
+      copy:
+        src: ../files/nc.png
+        dest: /var/www/html/nc.png
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Create index.html with rainbow and North Carolina
       copy:
         dest: /var/www/html/index.html
         content: |
@@ -21,7 +29,7 @@
           <html lang="en">
           <head>
             <meta charset="UTF-8">
-            <title>Hello World</title>
+            <title>Hello North Carolina</title>
             <style>
               body {
                 text-align: center;
@@ -48,7 +56,7 @@
           </head>
           <body>
             <h1>HELLO NORTH CAROLINA!</h1>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/North_Carolina_in_United_States.svg/800px-North_Carolina_in_United_States.svg.png" alt="North Carolina">
+            <img src="nc.png" alt="North Carolina">
           </body>
           </html>
         owner: www-data
